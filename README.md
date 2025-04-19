@@ -141,7 +141,7 @@ nodemon index.js
 
 ## Create .env file
 
-````env
+```env
 VITE_API_BASE_URL=your_backend_url
 ```
 
@@ -161,4 +161,7 @@ GET /api/products/:storeId — get products by store
 
 Orders
 POST /api/orders — place an order
-````
+
+```
+
+```
