@@ -135,7 +135,7 @@ PORT=your_port
 
 ```bash
 nodemon index.js
-````
+```
 
 ### 4. Setup frontend
 
@@ -165,3 +165,4 @@ POST /api/orders — place an order
 ```
 
 ```
+````
