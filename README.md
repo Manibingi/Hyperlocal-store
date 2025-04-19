@@ -139,6 +139,12 @@ nodemon index.js
 
 ### 4. Setup frontend
 
+## Create .env file
+
+````env
+VITE_API_BASE_URL=your_backend_url
+```
+
 ```bash
 cd frontend
 npm install
@@ -155,3 +161,4 @@ GET /api/products/:storeId — get products by store
 
 Orders
 POST /api/orders — place an order
+````
