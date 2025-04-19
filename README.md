@@ -127,9 +127,10 @@ npm install
 
 ## Create .env file
 
-````env
+```env
 MONGODB_URI=your_mongoDB-url
 PORT=your_port
+```
 
 ## Run the server
 
@@ -161,8 +162,3 @@ GET /api/products/:storeId — get products by store
 
 Orders
 POST /api/orders — place an order
-
-```
-
-```
-````
