@@ -2,20 +2,34 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useStore } from "../context/StoreContext";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const StorePage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { storeId } = useParams();
   const { selectedStore, addToCart } = useStore();
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/products/store/${storeId}`)
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error("Error fetching products:", err));
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/products/store/${storeId}`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, [storeId]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">

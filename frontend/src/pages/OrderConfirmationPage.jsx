@@ -3,16 +3,25 @@ import { useStore } from "../context/StoreContext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const OrderConfirmationPage = () => {
   const { customerName, setCustomerName } = useStore();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [showCheck, setShowCheck] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowCheck(true), 300);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setShowCheck(true);
+    }, 1000);
+
     return () => clearTimeout(timer);
   }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4">

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useStore } from "../context/StoreContext";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const HomePage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { setSelectedStore } = useStore();
   const [stores, setStores] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -15,11 +17,17 @@ const HomePage = () => {
         setStores(response.data);
       } catch (error) {
         console.error("Failed to fetch stores:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchStores();
   }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="p-6">

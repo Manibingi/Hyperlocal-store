@@ -1,7 +1,8 @@
 import { useStore } from "../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const CartPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -18,7 +19,16 @@ const CartPage = () => {
   } = useStore();
 
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for cart data
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -47,19 +57,21 @@ const CartPage = () => {
     }
   };
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   if (cart.length === 0) {
     return (
-      <>
-        <div className="min-h-screen flex flex-col gap-4 items-center justify-center text-lg text-gray-600">
-          Your cart is empty.
-          <button
-            onClick={() => navigate("/")}
-            className="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 transition duration-300 ease-in-out hover:scale-105 cursor-pointer"
-          >
-            Shop Now
-          </button>
-        </div>
-      </>
+      <div className="min-h-screen flex flex-col gap-4 items-center justify-center text-lg text-gray-600">
+        Your cart is empty.
+        <button
+          onClick={() => navigate("/")}
+          className="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 transition duration-300 ease-in-out hover:scale-105 cursor-pointer"
+        >
+          Shop Now
+        </button>
+      </div>
     );
   }
 
