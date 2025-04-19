@@ -146,6 +146,8 @@ nodemon index.js
 VITE_API_BASE_URL=your_backend_url
 ```
 
+## Run Frontend
+
 ```bash
 cd frontend
 npm install
